@@ -344,7 +344,11 @@ public class CameraFragment extends Fragment {
 
                 // We don't use a front facing camera in this sample.
                 Integer facing = characteristics.get(CameraCharacteristics.LENS_FACING);
-                if (facing != null && facing == CameraCharacteristics.LENS_FACING_FRONT) {
+//                if (facing != null && facing == CameraCharacteristics.LENS_FACING_FRONT) {
+//                    continue;
+//                }
+
+                if (facing != null && facing == CameraCharacteristics.LENS_FACING_BACK) {
                     continue;
                 }
 
@@ -389,6 +393,7 @@ public class CameraFragment extends Fragment {
                 int maxPreviewWidth = displaySize.x;
                 int maxPreviewHeight = displaySize.y;
 
+                Log.e(TAG, "Display rotation is : " + displayRotation + " swapped? " + swappedDimensions + " ," + width + " x " + height);
                 if (swappedDimensions) {
                     rotatedPreviewWidth = height;
                     rotatedPreviewHeight = width;
@@ -447,6 +452,7 @@ public class CameraFragment extends Fragment {
             if (!mCameraOpenCloseLock.tryAcquire(2500, TimeUnit.MILLISECONDS)) {
                 throw new RuntimeException("Time out waiting to lock camera opening.");
             }
+//            mCameraId = Camera.CameraInfo.CAMERA_FACING_FRONT;
             manager.openCamera(mCameraId, mStateCallback, mBackgroundHandler);
         } catch (CameraAccessException e) {
             e.printStackTrace();

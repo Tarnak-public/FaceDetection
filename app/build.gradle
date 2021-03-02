@@ -1,11 +1,11 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 30
     defaultConfig {
         applicationId "com.lightweh.facedetection"
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -16,6 +16,7 @@ android {
             }
         }
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -31,6 +32,28 @@ android {
         main {
             jniLibs.srcDirs = ["libs"]
         }
+    }
+    android {
+        defaultConfig {
+            ndk {
+//                abiFilters 'armeabi-v7a', 'x86', 'x86_64'
+                abiFilters 'armeabi-v7a'
+            }
+        }
+    }
+    packagingOptions {
+//        pickFirst "**/libc++_shared.so"
+//        pickFirst "lib/armeabi-v7a/libdlib.so"
+        //pickFirst 'lib/armeabi-v7a/libopencv_java4.so'
+        pickFirst 'lib/armeabi-v7a/libopencv_java3.so'
+        pickFirst 'lib/arm64-v8a/libopencv_java3.so'
+        pickFirst 'lib/x86_64/libopencv_java3.so'
+        pickFirst 'lib/x86/libopencv_java3.so'
+    }
+
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
     }
 }
 
